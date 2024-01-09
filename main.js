@@ -9,6 +9,18 @@ const servers = {
         }
     ]
 }
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+const firebaseConfig = {
+    // add config here
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const firestore = firebase.firestore();
+
 
 let init = async () => {
     localStream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
