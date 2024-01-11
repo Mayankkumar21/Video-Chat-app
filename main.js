@@ -1,3 +1,9 @@
+let APP_ID = "cbf27dff4d5d4d9bbc5aadf44942ff99"
+
+let token = null;
+let uid= String(Math.floor(Math.random()*10000))
+
+
 let localStream;
 let remoteStream;
 let peerConnection;
@@ -9,18 +15,6 @@ const servers = {
         }
     ]
 }
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
-const firebaseConfig = {
-    // add config here
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-const firestore = firebase.firestore();
-
 
 let init = async () => {
     localStream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
@@ -29,9 +23,9 @@ let init = async () => {
 }
 
 let createOffer = async () => {
-    peerConnection= new RTCPeerConnection(servers)
+    peerConnection=  new RTCPeerConnection(servers)
 
-    remoteStream= new MediaStream()
+    remoteStream = new MediaStream()
     document.getElementById("user-2").srcObject=remoteStream
 
 
@@ -42,13 +36,13 @@ let createOffer = async () => {
 
     peerConnection.ontrack = (event) => {
         event.streams[0].getTracks().forEach((track) =>{
-            remoteStream.addTrack()
+            remoteStream.addTrack(track)
         })
     }
 
     peerConnection.onicecandidate = async (event) => {
         if(event.candidate){
-            console.log("New ICE Candidate",event.candidate)
+            console.log("New ICE Candidate", event.candidate)
         }
     }
 
